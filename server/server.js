@@ -43,11 +43,29 @@ app.use("/api/status", (req,res)=> res.send("Server is Live"));
 app.use("/api/auth", userRouter);
 app.use("/api/messages", messageRouter);
 
-await connectDB();
+// await connectDB();
 
-if (process.env.NODE_ENV !== "production"){
+// if (process.env.NODE_ENV !== "production"){
+//     const PORT = process.env.PORT || 5000;
+//     server.listen(PORT, ()=> console.log("Server is running on PORT: "+PORT));
+// }
+
+// export default server;
+
+const startServer = async () => {
+  try {
+    await connectDB();
+    console.log("MongoDB Connected");
+
     const PORT = process.env.PORT || 5000;
-    server.listen(PORT, ()=> console.log("Server is running on PORT: "+PORT));
-}
 
-export default server;
+    server.listen(PORT, () => {
+      console.log("Server running on PORT:", PORT);
+    });
+
+  } catch (error) {
+    console.error("Server start error:", error);
+  }
+};
+
+startServer();
