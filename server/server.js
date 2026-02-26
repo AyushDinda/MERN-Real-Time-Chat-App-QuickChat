@@ -34,7 +34,10 @@ io.on("connection", (socket)=>{
 });
 
 app.use(express.json({limit:"4mb"}));
-app.use(cors());
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 
 app.use("/api/status", (req,res)=> res.send("Server is Live"));
 app.use("/api/auth", userRouter);
@@ -42,9 +45,9 @@ app.use("/api/messages", messageRouter);
 
 await connectDB();
 
-if (process.env.NODE_ENV !== "production"){
+// if (process.env.NODE_ENV !== "production"){
     const PORT = process.env.PORT || 5000;
     server.listen(PORT, ()=> console.log("Server is running on PORT: "+PORT));
-}
+// }
 
 export default server;
