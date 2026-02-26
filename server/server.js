@@ -39,7 +39,10 @@ app.use(cors({
   credentials: true
 }));
 
-app.use("/api/status", (req,res)=> res.send("Server is Live"));
+// app.use("/api/status", (req,res)=> res.send("Server is Live"));
+app.get("/api/status", (req, res) => {
+  res.send("Server is Live");
+});
 app.use("/api/auth", userRouter);
 app.use("/api/messages", messageRouter);
 
